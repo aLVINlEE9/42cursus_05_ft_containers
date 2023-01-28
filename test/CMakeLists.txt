@@ -9,7 +9,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(ft_container_test
         main.cpp
-        )
+        iterator_test.cpp)
 
 target_compile_options(ft_container_test PRIVATE -std=c++11)
 
