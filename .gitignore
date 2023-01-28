@@ -169,4 +169,5 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
 
-.cmake-build-debug/
+cmake-build-debug/
+.idea/
