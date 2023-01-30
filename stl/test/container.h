@@ -1,8 +1,0 @@
-//
-// Created by Alvin Lee on 2023/01/28.
-//
-
-#ifndef FT_CONTAINER_CONTAINER_H
-#define FT_CONTAINER_CONTAINER_H
-
-#endif //FT_CONTAINER_CONTAINER_H
