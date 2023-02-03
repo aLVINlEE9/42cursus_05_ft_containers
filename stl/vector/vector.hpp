@@ -219,6 +219,56 @@ class vector : protected __vector_base<T, Alloc> {
   //  - allocator_type get_allocator() const ❎
   allocator_type get_allocator() const;
 };
+
+/* NON-MEMBER FUNCTION OVERLOADS */
+
+// TODO NON-MEMBER FUNCTION OVERLOADS implement
+//  - template<class T, class Alloc>
+//	  bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+//  - template<class T, class Alloc>
+//	  bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+//  - template<class T, class Alloc>
+//    bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+//  - template<class T, class Alloc>
+//    bool operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+//  - template<class T, class Alloc>
+//    bool operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+//  - template<class T, class Alloc>
+//    bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+//  - template<class T, class Alloc>
+//    void swap(vector<T, Alloc> &x, vector<T, Alloc> &y) ❎
+
+template<class T, class Alloc>
+bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+template<class T, class Alloc>
+bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+template<class T, class Alloc>
+bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+template<class T, class Alloc>
+bool operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+template<class T, class Alloc>
+bool operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+template<class T, class Alloc>
+bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+template<class T, class Alloc>
+void swap(vector<T, Alloc> &x, vector<T, Alloc> &y);
+
+/* Template specializations */
+
+// bool specialization
+
+// TODO Template specializations implement
+//  - template<class Alloc>
+//	  class vector<bool, Alloc> ❎
+template<class Alloc>
+class vector<bool, Alloc>;
+
 }
 
 #endif //FT_CONTAINER_VECTOR_HPP
