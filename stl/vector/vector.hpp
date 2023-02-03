@@ -114,11 +114,13 @@ class vector : protected _vector_base<T, Alloc> {
   //  - copy constructor ❎
   //  - destructor ❎
   // Constructs an empty container, with no elements.
-  explicit vector(const allocator_type &alloc = allocator_type());
+  explicit vector(const allocator_type &alloc = allocator_type()) : _base(alloc) {}
 
   // Constructs a container with n elements. Each element is a copy of val.
   explicit vector(size_type n, const value_type &val = value_type(),
-				  const allocator_type &alloc = allocator_type());
+				  const allocator_type &alloc = allocator_type()) : _base(n, alloc) {
+	uninitialized_fill_n(n, val);
+  }
 
   // Constructs a container with as many elements as the range [first,last),
   // with each element constructed from its corresponding element in that range, in the same order.
