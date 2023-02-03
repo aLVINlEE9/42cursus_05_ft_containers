@@ -28,15 +28,20 @@ class vector : protected __vector_base<T, Alloc> {
  private:
   typedef __vector_base<T, Alloc> __base;
 
-  /* member_types */
  public:
-  typedef __base::value_type value_type;
-  typedef __base::allocator_type allocator_type;
-  typedef __base::reference reference;
-  typedef __base::const_reference const_reference;
-  typedef __base::pointer pointer;
-  typedef __base::const_pointer const_pointer;
-  // Todo: iterator, const_iterator, reverse_iterator, const_reverse_iterator
+/* MEMBER_TYPE */
+  typedef typename __base::value_type value_type;
+  typedef typename __base::allocator_type allocator_type;
+  typedef typename __base::reference reference;
+  typedef typename __base::const_reference const_reference;
+  typedef typename __base::pointer pointer;
+  typedef typename __base::const_pointer const_pointer;
+
+  // TODO iterators implement
+  //  - iterator ❎
+  //  - const_iterator ❎
+  //  - reverse_iterator ❎
+  //  - const_reverse_iterator ❎
   /*
    typedef iterator iterator;
    typedef const_iterator const_iterator;
