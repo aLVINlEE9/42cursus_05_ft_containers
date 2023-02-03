@@ -6,8 +6,35 @@
 #define FT_CONTAINER_VECTOR_HPP
 
 #include <memory>
+#include <uninitialized.hpp>
 
 namespace ft {
+
+template<class T, class Alloc>
+class _vector_alloc_base {
+ protected:
+  typedef T value_type;
+  typedef Alloc allocator_type;
+  typedef size_t size_type;
+
+  allocator_type m_allocator;
+  T *m_start;
+  T *m_finish;
+  T *m_end_of_storage;
+
+/* MEMBER FUNCTIONS */
+  /* Constructor */
+  _vector_alloc_base() {}
+  _vector_alloc_base(allocator_type &) {
+	m_start(0);
+	m_finish(0);
+	m_end_of_storage(0);
+  }
+
+  /* Destructor */
+  ~_vector_alloc_base() {
+  }
+};
 
 template<class T, class Alloc>
 class _vector_base {
