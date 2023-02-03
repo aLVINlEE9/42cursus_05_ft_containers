@@ -271,11 +271,7 @@ class vector : protected _vector_base<T, Alloc> {
    */
 
 
-  /* Allocator */
 
-  // TODO Allocator function implement
-  //  - allocator_type get_allocator() const ❎
-  allocator_type get_allocator() const;
 };
 
 /* NON-MEMBER FUNCTION OVERLOADS */
