@@ -10,9 +10,10 @@
 namespace ft {
 
 template<class T, class Alloc>
-class __vector_base : {
+class __vector_base {
  protected:
   typedef T value_type;
+  typedef Alloc allocator_type;
   typedef value_type &reference;
   typedef const value_type &const_reference;
   typedef value_type *pointer;
@@ -27,8 +28,10 @@ class vector : protected __vector_base<T, Alloc> {
  private:
   typedef __vector_base<T, Alloc> __base;
 
+  /* member_types */
  public:
-  typedef T value_type;
+  typedef __base::value_type value_type;
+  typedef __base::allocator_type allocator_type;
   typedef __base::reference reference;
   typedef __base::const_reference const_reference;
   typedef __base::pointer pointer;
