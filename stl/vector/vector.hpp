@@ -34,6 +34,10 @@ class _vector_alloc_base {
   /* Destructor */
   ~_vector_alloc_base() {
   }
+
+  /* Allocator */
+  //  - allocator_type get_allocator() const ✅
+  allocator_type get_allocator() const { return m_allocator; }
 };
 
 template<class T, class Alloc>
