@@ -37,16 +37,41 @@ class _vector_alloc_base {
 };
 
 template<class T, class Alloc>
-class _vector_base {
+class _vector_base : protected _vector_alloc_base<T, Alloc> {
+ private:
+  typedef _vector_alloc_base<T, Alloc> _base;
+
  protected:
-  typedef T value_type;
-  typedef Alloc allocator_type;
+  using _base::m_allocator;
+  using _base::m_start;
+  using _base::m_finish;
+  using _base::m_end_of_storage;
+
+  /* MEMBER_TYPE */
+  typedef typename _base::value_type value_type;
+  typedef typename _base::allocator_type allocator_type;
   typedef value_type &reference;
   typedef const value_type &const_reference;
   typedef value_type *pointer;
   typedef const value_type *const_pointer;
   typedef ptrdiff_t difference_type;
-  typedef size_t size_type;
+  typedef typename _base::size_type size_type;
+
+
+/* MEMBER FUNCTIONS */
+  /* Constructor */
+  _vector_base() {}
+  _vector_base(allocator_type &alloc) : _base(alloc) {}
+  _vector_base(size_type n, allocator_type &alloc) : _base(alloc) {
+	m_start = m_finish = m_allocator.allocate(n);
+	m_end_of_storage = m_start + n;
+  }
+
+  /* Destructor */
+  ~_vector_base() {
+	if (m_start) allocator_type::deallocate(m_start, m_end_of_storage - m_start);
+  }
+  // utils
 };
 
 // generic template
