@@ -10,7 +10,7 @@
 namespace ft {
 
 template<class T, class Alloc>
-class __vector_base {
+class _vector_base {
  protected:
   typedef T value_type;
   typedef Alloc allocator_type;
@@ -24,18 +24,18 @@ class __vector_base {
 
 // generic template
 template<class T, class Alloc = std::allocator<T> >
-class vector : protected __vector_base<T, Alloc> {
+class vector : protected _vector_base<T, Alloc> {
  private:
-  typedef __vector_base<T, Alloc> __base;
+  typedef _vector_base<T, Alloc> _base;
 
  public:
 /* MEMBER_TYPE */
-  typedef typename __base::value_type value_type;
-  typedef typename __base::allocator_type allocator_type;
-  typedef typename __base::reference reference;
-  typedef typename __base::const_reference const_reference;
-  typedef typename __base::pointer pointer;
-  typedef typename __base::const_pointer const_pointer;
+  typedef typename _base::value_type value_type;
+  typedef typename _base::allocator_type allocator_type;
+  typedef typename _base::reference reference;
+  typedef typename _base::const_reference const_reference;
+  typedef typename _base::pointer pointer;
+  typedef typename _base::const_pointer const_pointer;
 
   // TODO iterators implement
   //  - iterator ❎
@@ -49,8 +49,8 @@ class vector : protected __vector_base<T, Alloc> {
    typedef const_reverse_iterator const_reverse_iterator;
    */
 
-  typedef typename __base::difference_type difference_type;
-  typedef typename __base::size_type size_type;
+  typedef typename _base::difference_type difference_type;
+  typedef typename _base::size_type size_type;
 
 /* MEMBER FUNCTIONS */
   /* Constructor */
