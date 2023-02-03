@@ -108,8 +108,8 @@ class vector : protected _vector_base<T, Alloc> {
   /* Constructor */
 
   // TODO Vector Constructor / Destructor implement
-  //  - default constructor ❎
-  //  - fill constructor ❎
+  //  - default constructor ✅
+  //  - fill constructor ✅
   //  - range constructor ❎
   //  - copy constructor ❎
   //  - destructor ❎
