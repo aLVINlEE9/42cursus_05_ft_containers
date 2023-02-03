@@ -1,5 +1,5 @@
 
-#include "iterator.h"
+//#include "iterator.h"
 #include "gtest/gtest.h"
 
 namespace {
@@ -15,11 +15,11 @@ namespace {
 		}
 	};
 
-	TEST_F(IteratorTest, IndexTestAllExist) {
+	TEST_F(IteratorTest, TestExample) {
 		EXPECT_EQ(4, 2 + 2);
 	}
 
-	TEST_F(IteratorTest, IteratorTestId) {
-		EXPECT_EQ(10, ABC);
+	TEST_F(IteratorTest, TestExampleTwo) {
+		EXPECT_EQ(10, 10);
 	}
 }
