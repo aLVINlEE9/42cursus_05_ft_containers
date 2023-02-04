@@ -6,6 +6,8 @@
 #define FT_CONTAINER_VECTOR_HPP
 
 #include <memory>
+#include <iterator.hpp>
+#include <reverse_iterator.hpp>
 #include <uninitialized.hpp>
 
 namespace ft {
@@ -98,12 +100,12 @@ class vector : protected _vector_base<T, Alloc> {
   //  - const_iterator ❎
   //  - reverse_iterator ❎
   //  - const_reverse_iterator ❎
-  /*
-   typedef iterator iterator;
-   typedef const_iterator const_iterator;
-   typedef reverse_iterator reverse_iterator;
-   typedef const_reverse_iterator const_reverse_iterator;
-   */
+  typedef _iterator<pointer> iterator;
+  typedef _iterator<const_pointer> const_iterator;
+  // typedef iterator<iterator_traits<pointer>, T> iterator;
+  // typedef iterator<iterator_traits<const_pointer>, T> const_iterator;
+  typedef _reverse_iterator<iterator> reverse_iterator;
+  typedef _reverse_iterator<const_iterator> const_reverse_iterator;
 
   typedef typename _base::difference_type difference_type;
   typedef typename _base::size_type size_type;
