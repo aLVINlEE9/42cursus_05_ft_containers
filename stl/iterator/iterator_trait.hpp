@@ -9,14 +9,14 @@
 
 namespace ft {
 
-// Empty classes to identify the category of an iterators
+/// Empty classes to identify the category of an iterators
 struct input_iterator_tag {};
 struct output_iterator_tag {};
 struct forward_iterator_tag : public input_iterator_tag {};
 struct bidirectional_iterator_tag : public forward_iterator_tag {};
 struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
-// generic definition
+/// generic definition
 template<class Iterator>
 class iterator_traits {
   typedef typename Iterator::difference_type difference_type;
@@ -26,7 +26,7 @@ class iterator_traits {
   typedef typename Iterator::iterator_category iterator_category;
 };
 
-// T* specialization
+/// T* specialization
 template<class T>
 class iterator_traits<T *> {
   typedef ptrdiff_t difference_type;
@@ -36,7 +36,7 @@ class iterator_traits<T *> {
   typedef random_access_iterator_tag iterator_category;
 };
 
-// const T* specialization
+/// const T* specialization
 template<class T>
 class iterator_traits<const T *> {
   typedef ptrdiff_t difference_type;

@@ -24,8 +24,8 @@ class _vector_alloc_base {
   T *m_finish;
   T *m_end_of_storage;
 
-/* MEMBER FUNCTIONS */
-  /* Constructor */
+///* MEMBER FUNCTIONS *///
+  ///* Constructor *///
   _vector_alloc_base() {}
   _vector_alloc_base(allocator_type &) {
 	m_start(0);
@@ -33,12 +33,12 @@ class _vector_alloc_base {
 	m_end_of_storage(0);
   }
 
-  /* Destructor */
+  ///* Destructor *///
   ~_vector_alloc_base() {
   }
 
-  /* Allocator */
-  //  - allocator_type get_allocator() const ✅
+  ///* Allocator *///
+  ///  - allocator_type get_allocator() const ✅
   allocator_type get_allocator() const { return m_allocator; }
 };
 
@@ -53,7 +53,7 @@ class _vector_base : protected _vector_alloc_base<T, Alloc> {
   using _base::m_finish;
   using _base::m_end_of_storage;
 
-  /* MEMBER_TYPE */
+  ///* MEMBER_TYPE *///
   typedef typename _base::value_type value_type;
   typedef typename _base::allocator_type allocator_type;
   typedef value_type &reference;
@@ -64,8 +64,8 @@ class _vector_base : protected _vector_alloc_base<T, Alloc> {
   typedef typename _base::size_type size_type;
 
 
-/* MEMBER FUNCTIONS */
-  /* Constructor */
+///* MEMBER FUNCTIONS *///
+  ///* Constructor *///
   _vector_base() {}
   _vector_base(allocator_type &alloc) : _base(alloc) {}
   _vector_base(size_type n, allocator_type &alloc) : _base(alloc) {
@@ -73,21 +73,21 @@ class _vector_base : protected _vector_alloc_base<T, Alloc> {
 	m_end_of_storage = m_start + n;
   }
 
-  /* Destructor */
+  ///* Destructor *///
   ~_vector_base() {
 	if (m_start) allocator_type::deallocate(m_start, m_end_of_storage - m_start);
   }
   // utils
 };
 
-// generic template
+/// generic template
 template<class T, class Alloc = std::allocator<T> >
 class vector : protected _vector_base<T, Alloc> {
  private:
   typedef _vector_base<T, Alloc> _base;
 
  public:
-/* MEMBER_TYPE */
+///* MEMBER_TYPE *///
   typedef typename _base::value_type value_type;
   typedef typename _base::allocator_type allocator_type;
   typedef typename _base::reference reference;
@@ -95,11 +95,11 @@ class vector : protected _vector_base<T, Alloc> {
   typedef typename _base::pointer pointer;
   typedef typename _base::const_pointer const_pointer;
 
-  // TODO iterators implement
-  //  - iterator ❎
-  //  - const_iterator ❎
-  //  - reverse_iterator ❎
-  //  - const_reverse_iterator ❎
+  /// TODO iterators implement
+  ///  - iterator ❎
+  ///  - const_iterator ❎
+  /// - reverse_iterator ❎
+  /// - const_reverse_iterator ❎
   typedef _iterator<pointer> iterator;
   typedef _iterator<const_pointer> const_iterator;
   // typedef iterator<iterator_traits<pointer>, T> iterator;
@@ -110,57 +110,56 @@ class vector : protected _vector_base<T, Alloc> {
   typedef typename _base::difference_type difference_type;
   typedef typename _base::size_type size_type;
 
-/* MEMBER FUNCTIONS */
-  /* Constructor */
+///* MEMBER FUNCTIONS *///
+  ///* Constructor *///
 
-  // TODO Vector Constructor / Destructor implement
-  //  - default constructor ✅
-  //  - fill constructor ✅
-  //  - range constructor ❎
-  //  - copy constructor ❎
-  //  - destructor ❎
-  // Constructs an empty container, with no elements.
+  /// TODO Vector Constructor / Destructor implement
+  ///  - default constructor ✅
+  ///  - fill constructor ✅
+  ///  - range constructor ❎
+  ///  - copy constructor ❎
+  ///  - destructor ❎
+  /// Constructs an empty container, with no elements.
   explicit vector(const allocator_type &alloc = allocator_type()) : _base(alloc) {}
 
-  // Constructs a container with n elements. Each element is a copy of val.
+  /// Constructs a container with n elements. Each element is a copy of val.
   explicit vector(size_type n, const value_type &val = value_type(),
 				  const allocator_type &alloc = allocator_type()) : _base(n, alloc) {
 	uninitialized_fill_n(n, val);
   }
 
-  // Constructs a container with as many elements as the range [first,last),
-  // with each element constructed from its corresponding element in that range, in the same order.
+  /// Constructs a container with as many elements as the range [first,last),
+  /// with each element constructed from its corresponding element in that range, in the same order.
   template<class InputIterator>
   vector(InputIterator first, InputIterator last,
 		 const allocator_type &alloc = allocator_type());
 
-  // Constructs a container with a copy of each of the elements in x, in the same order.
+  /// Constructs a container with a copy of each of the elements in x, in the same order.
   vector(const vector &x);
 
-  /* Destructor */
-  // This destroys all container elements, and deallocates all the storage capacity
-  // allocated by the vector using its allocator.
+  ///* Destructor *///
+  /// This destroys all container elements, and deallocates all the storage capacity
+  /// allocated by the vector using its allocator.
   ~vector();
 
 
-  /* Operator */
-  // Copies all the elements from x into the container.
-  // The container preserves its current allocator, which is used to allocate storage in case of reallocation.
+  ///* Operator *///
+  /// Copies all the elements from x into the container.
+  /// The container preserves its current allocator, which is used to allocate storage in case of reallocation.
   vector &operator=(const vector &x);
 
-  /* Iterators */
+  ///* Iterators *///
 
-  // TODO Member Function implement
-  //  - iterator begin(); ❎
-  //  - const_iterator begin() const; ❎
-  //  - iterator end(); ❎
-  //  - const_iterator end() const; ❎
-  //  - reverse_iterator rbegin(); ❎
-  //  - const_reverse_iterator rbegin() const; ❎
-  //  - reverse_iterator rend(); ❎
-  //  - const_reverse_iterator rend() const; ❎
+  /// TODO Member Function implement
+  ///  - iterator begin(); ❎
+  ///  - const_iterator begin() const; ❎
+  ///  - iterator end(); ❎
+  ///  - const_iterator end() const; ❎
+  ///  - reverse_iterator rbegin(); ❎
+  ///  - const_reverse_iterator rbegin() const; ❎
+  ///  - reverse_iterator rend(); ❎
+  ///  - const_reverse_iterator rend() const; ❎
 
-  /*
    iterator begin();
 
    const_iterator begin() const;
@@ -176,17 +175,16 @@ class vector : protected _vector_base<T, Alloc> {
    reverse_iterator rend();
 
    const_reverse_iterator rend() const;
-  */
 
 
-  /* Capacity */
-  // TODO Capacity Member Function implement
-  //  - size() ❎
-  //  - max_size() ❎
-  //  - resize() ❎
-  //  - capacity() ❎
-  //  - empty() ❎
-  //  - reverse() ❎
+  ///* Capacity *///
+  /// TODO Capacity Member Function implement
+  ///  - size() ❎
+  ///  - max_size() ❎
+  ///  - resize() ❎
+  ///  - capacity() ❎
+  ///  - empty() ❎
+  ///  - reverse() ❎
   size_type size() const;
 
   size_type max_size() const;
@@ -199,17 +197,17 @@ class vector : protected _vector_base<T, Alloc> {
 
   void reserve(size_type n);
 
-  /* Element Access */
+  ///* Element Access *///
 
-  // TODO Element Access Function implement
-  //  - reference operator[](size_type n) ❎
-  //  - const_reference operator[](size_type n) const ❎
-  //  - reference at(size_type n) ❎
-  //  - const_reference at(size_type n) const ❎
-  //  - reference front() ❎
-  //  - const_reference front() const ❎
-  //  - reference back() ❎
-  //  - const_reference back() const ❎
+  /// TODO Element Access Function implement
+  ///  - reference operator[](size_type n) ❎
+  ///  - const_reference operator[](size_type n) const ❎
+  ///  - reference at(size_type n) ❎
+  ///  - const_reference at(size_type n) const ❎
+  ///  - reference front() ❎
+  ///  - const_reference front() const ❎
+  ///  - reference back() ❎
+  ///  - const_reference back() const ❎
 
   reference operator[](size_type n);
 
@@ -228,7 +226,7 @@ class vector : protected _vector_base<T, Alloc> {
   const_reference back() const;
 
 
-  /* Modifiers */
+  ///* Modifiers *///
   // TODO Modifier Function implement
   //  - template<class InputIterator>
   //  void assign(InputIterator first, InputIterator last) ❎
@@ -243,56 +241,53 @@ class vector : protected _vector_base<T, Alloc> {
   //  - iterator erase(iterator first, iterator last) ❎
   //  - void swap(vector &x) ❎
   //  - void clear() ❎
-  /*
-	// the new contents are elements constructed from each of the elements
-	// in the range between first and last, in the same order.
-    template<class InputIterator>
-    void assign(InputIterator first, InputIterator last);
 
-	// the new contents are n elements, each initialized to a copy of val.
-	void assign(size_type n, const value_type &val);
+  /// the new contents are elements constructed from each of the elements
+  /// in the range between first and last, in the same order.
+  template<class InputIterator>
+  void assign(InputIterator first, InputIterator last);
 
-	void push_back(const value_type &val);
+  /// the new contents are n elements, each initialized to a copy of val.
+  void assign(size_type n, const value_type &val);
 
-	void pop_back();
+  void push_back(const value_type &val);
 
-	iterator insert(iterator position, const value_type &val);
+  void pop_back();
 
-	void insert(iterator position, size_type n, const value_type &val);
+  iterator insert(iterator position, const value_type &val);
 
-	template<class InputIterator>
-	void insert(iterator position, InputIterator first, InputIterator last);
+  void insert(iterator position, size_type n, const value_type &val);
 
-	iterator erase(iterator position);
+  template<class InputIterator>
+  void insert(iterator position, InputIterator first, InputIterator last);
 
-	iterator erase(iterator first, iterator last);
+  iterator erase(iterator position);
 
-	void swap(vector &x);
+  iterator erase(iterator first, iterator last);
 
-	void clear();
-   */
+  void swap(vector &x);
 
-
+  void clear();
 
 };
 
-/* NON-MEMBER FUNCTION OVERLOADS */
+///* NON-MEMBER FUNCTION OVERLOADS *///
 
-// TODO NON-MEMBER FUNCTION OVERLOADS implement
-//  - template<class T, class Alloc>
-//	  bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
-//  - template<class T, class Alloc>
-//	  bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
-//  - template<class T, class Alloc>
-//    bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
-//  - template<class T, class Alloc>
-//    bool operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
-//  - template<class T, class Alloc>
-//    bool operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
-//  - template<class T, class Alloc>
-//    bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
-//  - template<class T, class Alloc>
-//    void swap(vector<T, Alloc> &x, vector<T, Alloc> &y) ❎
+/// TODO NON-MEMBER FUNCTION OVERLOADS implement
+///  - template<class T, class Alloc>
+///	  bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+///  - template<class T, class Alloc>
+///	  bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+///  - template<class T, class Alloc>
+///    bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+///  - template<class T, class Alloc>
+///    bool operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+///  - template<class T, class Alloc>
+///    bool operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+///  - template<class T, class Alloc>
+///    bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) ❎
+///  - template<class T, class Alloc>
+///    void swap(vector<T, Alloc> &x, vector<T, Alloc> &y) ❎
 
 template<class T, class Alloc>
 bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
@@ -315,13 +310,13 @@ bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
 template<class T, class Alloc>
 void swap(vector<T, Alloc> &x, vector<T, Alloc> &y);
 
-/* Template specializations */
+///* Template specializations *///
 
-// bool specialization
+/// bool specialization
 
-// TODO Template specializations implement
-//  - template<class Alloc>
-//	  class vector<bool, Alloc> ❎
+/// TODO Template specializations implement
+///  - template<class Alloc>
+///	  class vector<bool, Alloc> ❎
 template<class Alloc>
 class vector<bool, Alloc>;
 

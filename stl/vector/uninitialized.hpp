@@ -9,11 +9,11 @@
 
 namespace ft {
 
-// TODO uninitialized implement
-//  - uninitialized_fill_n() ♻️
-//  - uninitialized_fill() ❎
-//  - uninitialized_copy_n() ❎
-//  - uninitialized_copy() ❎
+/// TODO uninitialized implement
+///  - uninitialized_fill_n() ♻️
+///  - uninitialized_fill() ❎
+///  - uninitialized_copy_n() ❎
+///  - uninitialized_copy() ❎
 
 template<class ForwardIterator, class Size, class T>
 void uninitialized_fill_n(ForwardIterator first, Size n, const T &x) {

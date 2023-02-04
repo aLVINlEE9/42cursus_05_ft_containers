@@ -18,10 +18,10 @@ class _reverse_iterator
 							typename iterator_traits<Iterator>::pointer,
 							typename iterator_traits<Iterator>::reference> {
  public:
-/* MEMBER_TYPE */
+///* MEMBER_TYPE *///
   typedef Iterator iterator_type;
 
-/* MEMBER_FUNCTION */
+///* MEMBER_FUNCTION *///
   _reverse_iterator() {}
   ~_reverse_iterator() {}
 };
