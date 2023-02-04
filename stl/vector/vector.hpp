@@ -86,6 +86,12 @@ class vector : protected _vector_base<T, Alloc> {
  private:
   typedef _vector_base<T, Alloc> _base;
 
+ protected:
+  using _base::m_allocator;
+  using _base::m_start;
+  using _base::m_finish;
+  using _base::m_end_of_storage;
+
  public:
 ///* MEMBER_TYPE *///
   typedef typename _base::value_type value_type;
@@ -151,22 +157,30 @@ class vector : protected _vector_base<T, Alloc> {
   ///* Iterators *///
 
   /// TODO Member Function implement
-  ///  - iterator begin(); ❎
-  ///  - const_iterator begin() const; ❎
-  ///  - iterator end(); ❎
-  ///  - const_iterator end() const; ❎
+  ///  - iterator begin(); ✅
+  ///  - const_iterator begin() const; ✅
+  ///  - iterator end(); ✅
+  ///  - const_iterator end() const; ✅
   ///  - reverse_iterator rbegin(); ❎
   ///  - const_reverse_iterator rbegin() const; ❎
   ///  - reverse_iterator rend(); ❎
   ///  - const_reverse_iterator rend() const; ❎
 
-   iterator begin();
+   iterator begin() {
+	 return iterator(m_start);
+   }
 
-   const_iterator begin() const;
+   const_iterator begin() const {
+	 return const_iterator(m_start);
+   }
 
-   iterator end();
+   iterator end() {
+	 return iterator(m_finish);
+   }
 
-   const_iterator end() const;
+   const_iterator end() const {
+	 return const_iterator(m_finish);
+   }
 
    reverse_iterator rbegin();
 
