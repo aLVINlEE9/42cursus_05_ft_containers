@@ -19,34 +19,115 @@ class _iterator
 							typename iterator_traits<Iterator>::reference> {
  public:
 ///* MEMBER_TYPE *///
+  typedef typename iterator_traits<Iterator>::reference reference;
+  typedef typename iterator_traits<Iterator>::pointer pointer;
 
+  Iterator m_pointer;
 
-///* MEMBER_FUNCTION *///
+  ///* MEMBER_FUNCTION *///
   /// TODO Constructor / Destructor
-  ///  - Constructor ❎
-  ///  - Destructor ❎
+  ///  - Constructor ♻️
+  ///  - Destructor ♻️
   ///* Constructor *///
+  _iterator() { m_pointer(Iterator()); }
+  _iterator(const Iterator &_i) { m_pointer(_i); }
 
   ///* Destructor *///
+  ~_iterator() {}
 
   ///* Operator *///
   /// TODO Operator
-  ///  - Input-Iterator requirements ❎
-  ///  - Output-Iterator requirements ❎
-  ///  - Forward-Iterator requirements ❎
-  ///  - Bidirectional-Iterator requirements ❎
-  ///  - RandomAccess-Iterator requirements ❎
+  ///  - all categories requirements ✅
+  ///  - Input-Iterator requirements ✅
+  ///  - Output-Iterator requirements ♻️
+  ///  - Forward-Iterator requirements ♻️
+  ///  - Bidirectional-Iterator requirements ♻️
+  ///  - RandomAccess-Iterator requirements ♻️
+
+  /// all categories requirements
+  _iterator &operator=(const _iterator &rhs) {
+	if (this == &rhs) {
+	  return *this;
+	}
+	this->m_pointer = rhs.m_pointer;
+	return *this;
+  }
+
+  _iterator &operator++() {
+	++m_pointer;
+	return *this;
+  }
+
+  _iterator operator++(int) {
+	return _iterator(m_pointer++);
+  }
 
   /// Input-Iterator requirements
+  bool operator==(const _iterator &rhs) const {
+	return m_pointer == rhs.m_pointer;
+  }
+
+  bool operator!=(const _iterator &rhs) const {
+	return m_pointer != rhs.m_pointer;
+  }
+
+  reference operator*() {
+	return *m_pointer;
+  }
+
+  pointer operator->() {
+	return m_pointer;
+  }
 
   /// Output-Iterator requirements
-
   /// Forward-Iterator requirements
-
   /// Bidirectional-Iterator requirements
+  _iterator &operator--() {
+	--m_pointer;
+	return *this;
+  }
+
+  _iterator operator--(int) {
+	return _iterator(m_pointer--);
+  }
 
   /// RandomAccess-Iterator requirements
+  _iterator operator+(int n) {
+	return _iterator(m_pointer + n);
+  }
 
+  _iterator operator-(int n) {
+	return _iterator(m_pointer - n);
+  }
+
+  bool operator>(const _iterator &rhs) {
+	return m_pointer > rhs.m_pointer;
+  }
+
+  bool operator<(const _iterator &rhs) {
+	return m_pointer < rhs.m_pointer;
+  }
+
+  bool operator>=(const _iterator &rhs) {
+	return m_pointer >= rhs.m_pointer;
+  }
+
+  bool operator<=(const _iterator &rhs) {
+	return m_pointer <= rhs.m_pointer;
+  }
+
+  _iterator operator+=(int n) {
+	m_pointer += n;
+	return *this;
+  }
+
+  _iterator operator-=(int n) {
+	m_pointer -= n;
+	return *this;
+  }
+
+  reference operator[](int idx) {
+	return m_pointer[idx];
+  }
 };
-}
 #endif //FT_CONTAINER_ITERATOR_HPP
