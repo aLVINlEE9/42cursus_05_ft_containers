@@ -18,9 +18,35 @@ class _iterator
 							typename iterator_traits<Iterator>::pointer,
 							typename iterator_traits<Iterator>::reference> {
  public:
-/* MEMBER_FUNCTION */
-  _iterator() {}
-  ~_iterator() {}
+///* MEMBER_TYPE *///
+
+
+///* MEMBER_FUNCTION *///
+  /// TODO Constructor / Destructor
+  ///  - Constructor ❎
+  ///  - Destructor ❎
+  ///* Constructor *///
+
+  ///* Destructor *///
+
+  ///* Operator *///
+  /// TODO Operator
+  ///  - Input-Iterator requirements ❎
+  ///  - Output-Iterator requirements ❎
+  ///  - Forward-Iterator requirements ❎
+  ///  - Bidirectional-Iterator requirements ❎
+  ///  - RandomAccess-Iterator requirements ❎
+
+  /// Input-Iterator requirements
+
+  /// Output-Iterator requirements
+
+  /// Forward-Iterator requirements
+
+  /// Bidirectional-Iterator requirements
+
+  /// RandomAccess-Iterator requirements
+
 };
 }
 #endif //FT_CONTAINER_ITERATOR_HPP
