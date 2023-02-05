@@ -161,35 +161,42 @@ class vector : protected _vector_base<T, Alloc> {
   ///  - const_iterator begin() const; ✅
   ///  - iterator end(); ✅
   ///  - const_iterator end() const; ✅
-  ///  - reverse_iterator rbegin(); ❎
-  ///  - const_reverse_iterator rbegin() const; ❎
-  ///  - reverse_iterator rend(); ❎
-  ///  - const_reverse_iterator rend() const; ❎
+  ///  - reverse_iterator rbegin(); ✅
+  ///  - const_reverse_iterator rbegin() const; ✅
+  ///  - reverse_iterator rend(); ✅
+  ///  - const_reverse_iterator rend() const; ✅
 
-   iterator begin() {
-	 return iterator(m_start);
-   }
+  iterator begin() {
+	return iterator(m_start);
+  }
 
-   const_iterator begin() const {
-	 return const_iterator(m_start);
-   }
+  const_iterator begin() const {
+	return const_iterator(m_start);
+  }
 
-   iterator end() {
-	 return iterator(m_finish);
-   }
+  iterator end() {
+	return iterator(m_finish);
+  }
 
-   const_iterator end() const {
-	 return const_iterator(m_finish);
-   }
+  const_iterator end() const {
+	return const_iterator(m_finish);
+  }
 
-   reverse_iterator rbegin();
+  reverse_iterator rbegin() {
+	return reverse_iterator(end());
+  }
 
-   const_reverse_iterator rbegin() const;
+  const_reverse_iterator rbegin() const {
+	return const_reverse_iterator(end());
+  }
 
-   reverse_iterator rend();
+  reverse_iterator rend() {
+	return reverse_iterator(begin());
+  }
 
-   const_reverse_iterator rend() const;
-
+  const_reverse_iterator rend() const {
+	return const_reverse_iterator(begin());
+  }
 
   ///* Capacity *///
   /// TODO Capacity Member Function implement
