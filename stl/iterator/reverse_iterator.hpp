@@ -45,46 +45,55 @@ class _reverse_iterator
 
   ///* Operator *////
   reference operator*() const {
-
+	Iterator tmp = m_pointer;
+	return *--tmp;
   }
   _reverse_iterator operator+(difference_type n) const {
-
+	return _reverse_iterator(m_pointer + n);
   }
 
   _reverse_iterator &operator++() {
-
+	--m_pointer;
+	return *this;
   }
 
   _reverse_iterator operator++(int) {
-
+	_reverse_iterator tmp = *this;
+	--m_pointer;
+	return *this;
   }
 
   _reverse_iterator &operator+=(difference_type n) {
-
+	m_pointer -= n;
+	return *this;
   }
 
   _reverse_iterator operator-(difference_type n) const {
-
+	return _reverse_iterator(m_pointer - n);
   }
 
   _reverse_iterator &operator--() {
-
+	++m_pointer;
+	return *this;
   }
 
   _reverse_iterator operator--(int) {
-
+	_reverse_iterator tmp = *this;
+	++m_pointer;
+	return *this;
   }
 
   _reverse_iterator &operator-=(difference_type n) {
-
+	m_pointer += n;
+	return *this;
   }
 
   pointer operator->() const {
-
+	return m_pointer;
   }
 
   reference operator[](difference_type n) const {
-
+	return *(*this + n);
   }
 
 };
