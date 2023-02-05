@@ -24,21 +24,23 @@ class _reverse_iterator
   typedef typename iterator_traits<Iterator>::difference_type difference_type;
   typedef typename iterator_traits<Iterator>::pointer pointer;
 
+  Iterator m_pointer;
+
 ///* MEMBER_FUNCTION *///
   ///* Constructor *///
   _reverse_iterator() {}
 
   explicit _reverse_iterator(iterator_type it) {
-
+	m_pointer(it);
   }
 
   template<class Iter>
   _reverse_iterator(const _reverse_iterator<Iter> &rev_it) {
-
+	m_pointer(rev_it.base());
   }
 
   iterator_type base() const {
-
+	return m_pointer;
   }
 
   ///* Operator *////
