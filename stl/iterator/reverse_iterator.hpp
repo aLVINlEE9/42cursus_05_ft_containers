@@ -20,11 +20,96 @@ class _reverse_iterator
  public:
 ///* MEMBER_TYPE *///
   typedef Iterator iterator_type;
+  typedef typename iterator_traits<Iterator>::reference reference;
+  typedef typename iterator_traits<Iterator>::difference_type difference_type;
+  typedef typename iterator_traits<Iterator>::pointer pointer;
 
 ///* MEMBER_FUNCTION *///
+  ///* Constructor *///
   _reverse_iterator() {}
-  ~_reverse_iterator() {}
+
+  explicit _reverse_iterator(iterator_type it) {
+
+  }
+
+  template<class Iter>
+  _reverse_iterator(const _reverse_iterator<Iter> &rev_it) {
+
+  }
+
+  iterator_type base() const {
+
+  }
+
+  ///* Operator *////
+  reference operator*() const {
+
+  }
+  _reverse_iterator operator+(difference_type n) const {
+
+  }
+
+  _reverse_iterator &operator++() {
+
+  }
+
+  _reverse_iterator operator++(int) {
+
+  }
+
+  _reverse_iterator &operator+=(difference_type n) {
+
+  }
+
+  _reverse_iterator operator-(difference_type n) const {
+
+  }
+
+  _reverse_iterator &operator--() {
+
+  }
+
+  _reverse_iterator operator--(int) {
+
+  }
+
+  _reverse_iterator &operator-=(difference_type n) {
+
+  }
+
+  pointer operator->() const {
+
+  }
+
+  reference operator[](difference_type n) const {
+
+  }
+
 };
+
+template<class Iterator>
+bool operator==(const _reverse_iterator<Iterator> &lhs,
+				const _reverse_iterator<Iterator> &rhs);
+
+template<class Iterator>
+bool operator!=(const _reverse_iterator<Iterator> &lhs,
+				const _reverse_iterator<Iterator> &rhs);
+
+template<class Iterator>
+bool operator<(const _reverse_iterator<Iterator> &lhs,
+			   const _reverse_iterator<Iterator> &rhs);
+
+template<class Iterator>
+bool operator<=(const _reverse_iterator<Iterator> &lhs,
+				const _reverse_iterator<Iterator> &rhs);
+
+template<class Iterator>
+bool operator>(const _reverse_iterator<Iterator> &lhs,
+			   const _reverse_iterator<Iterator> &rhs);
+
+template<class Iterator>
+bool operator>=(const _reverse_iterator<Iterator> &lhs,
+				const _reverse_iterator<Iterator> &rhs);
 }
 
 #endif //FT_CONTAINER_STL_ITERATOR_REVERSE_ITERATOR_HPP_
