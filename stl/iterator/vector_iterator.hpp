@@ -11,7 +11,7 @@
 namespace ft {
 
 template<typename Iterator>
-class _iterator
+class _vector_iterator
 	: public _iterator_base<typename iterator_traits<Iterator>::iterator_category,
 							typename iterator_traits<Iterator>::value_type,
 							typename iterator_traits<Iterator>::difference_type,
@@ -29,11 +29,11 @@ class _iterator
   ///  - Constructor ♻️
   ///  - Destructor ♻️
   ///* Constructor *///
-  _iterator() { m_pointer(Iterator()); }
-  _iterator(const Iterator &_i) { m_pointer(_i); }
+  _vector_iterator() { m_pointer(Iterator()); }
+  _vector_iterator(const Iterator &_i) { m_pointer(_i); }
 
   ///* Destructor *///
-  ~_iterator() {}
+  ~_vector_iterator() {}
 
   ///* Operator *///
   /// TODO Operator
@@ -45,7 +45,7 @@ class _iterator
   ///  - RandomAccess-Iterator requirements ♻️
 
   /// all categories requirements
-  _iterator &operator=(const _iterator &rhs) {
+  _vector_iterator &operator=(const _vector_iterator &rhs) {
 	if (this == &rhs) {
 	  return *this;
 	}
@@ -53,21 +53,21 @@ class _iterator
 	return *this;
   }
 
-  _iterator &operator++() {
+  _vector_iterator &operator++() {
 	++m_pointer;
 	return *this;
   }
 
-  _iterator operator++(int) {
-	return _iterator(m_pointer++);
+  _vector_iterator operator++(int) {
+	return _vector_iterator(m_pointer++);
   }
 
   /// Input-Iterator requirements
-  bool operator==(const _iterator &rhs) const {
+  bool operator==(const _vector_iterator &rhs) const {
 	return m_pointer == rhs.m_pointer;
   }
 
-  bool operator!=(const _iterator &rhs) const {
+  bool operator!=(const _vector_iterator &rhs) const {
 	return m_pointer != rhs.m_pointer;
   }
 
@@ -82,46 +82,46 @@ class _iterator
   /// Output-Iterator requirements
   /// Forward-Iterator requirements
   /// Bidirectional-Iterator requirements
-  _iterator &operator--() {
+  _vector_iterator &operator--() {
 	--m_pointer;
 	return *this;
   }
 
-  _iterator operator--(int) {
-	return _iterator(m_pointer--);
+  _vector_iterator operator--(int) {
+	return _vector_iterator(m_pointer--);
   }
 
   /// RandomAccess-Iterator requirements
-  _iterator operator+(int n) {
-	return _iterator(m_pointer + n);
+  _vector_iterator operator+(int n) {
+	return _vector_iterator(m_pointer + n);
   }
 
-  _iterator operator-(int n) {
-	return _iterator(m_pointer - n);
+  _vector_iterator operator-(int n) {
+	return _vector_iterator(m_pointer - n);
   }
 
-  bool operator>(const _iterator &rhs) {
+  bool operator>(const _vector_iterator &rhs) {
 	return m_pointer > rhs.m_pointer;
   }
 
-  bool operator<(const _iterator &rhs) {
+  bool operator<(const _vector_iterator &rhs) {
 	return m_pointer < rhs.m_pointer;
   }
 
-  bool operator>=(const _iterator &rhs) {
+  bool operator>=(const _vector_iterator &rhs) {
 	return m_pointer >= rhs.m_pointer;
   }
 
-  bool operator<=(const _iterator &rhs) {
+  bool operator<=(const _vector_iterator &rhs) {
 	return m_pointer <= rhs.m_pointer;
   }
 
-  _iterator operator+=(int n) {
+  _vector_iterator operator+=(int n) {
 	m_pointer += n;
 	return *this;
   }
 
-  _iterator operator-=(int n) {
+  _vector_iterator operator-=(int n) {
 	m_pointer -= n;
 	return *this;
   }
@@ -130,4 +130,5 @@ class _iterator
 	return m_pointer[idx];
   }
 };
+}
 #endif //FT_CONTAINER_ITERATOR_HPP

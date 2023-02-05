@@ -6,7 +6,7 @@
 #define FT_CONTAINER_VECTOR_HPP
 
 #include <memory>
-#include <iterator.hpp>
+#include <vector_iterator.hpp>
 #include <reverse_iterator.hpp>
 #include <uninitialized.hpp>
 
@@ -106,8 +106,8 @@ class vector : protected _vector_base<T, Alloc> {
   ///  - const_iterator ❎
   /// - reverse_iterator ❎
   /// - const_reverse_iterator ❎
-  typedef _iterator<pointer> iterator;
-  typedef _iterator<const_pointer> const_iterator;
+  typedef _vector_iterator<pointer> iterator;
+  typedef _vector_iterator<const_pointer> const_iterator;
   // typedef iterator<iterator_traits<pointer>, T> iterator;
   // typedef iterator<iterator_traits<const_pointer>, T> const_iterator;
   typedef _reverse_iterator<iterator> reverse_iterator;
