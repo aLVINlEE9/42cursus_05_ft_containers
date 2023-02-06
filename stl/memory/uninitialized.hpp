@@ -18,7 +18,7 @@ namespace ft {
 template<class ForwardIterator, class Size, class T>
 void uninitialized_fill_n(ForwardIterator first, Size n, const T &x) {
   for (; n--; ++first)
-	new (static_cast<void *>(&*first))
+	new(static_cast<void *>(&*first))
 		typename iterator_traits<ForwardIterator>::value_type(x);
 }
 
