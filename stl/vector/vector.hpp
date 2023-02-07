@@ -8,6 +8,8 @@
 #include <memory>
 #include <vector_iterator.hpp>
 #include <reverse_iterator.hpp>
+#include <enable_if.hpp>
+#include <is_integral.hpp>
 #include <uninitialized.hpp>
 
 namespace ft {
@@ -63,7 +65,6 @@ class _vector_base : protected _vector_alloc_base<T, Alloc> {
   typedef ptrdiff_t difference_type;
   typedef typename _base::size_type size_type;
 
-
 ///* MEMBER FUNCTIONS *///
   ///* Constructor *///
   _vector_base() {}
@@ -78,6 +79,10 @@ class _vector_base : protected _vector_alloc_base<T, Alloc> {
 	if (m_start) allocator_type::deallocate(m_start, m_end_of_storage - m_start);
   }
   // utils
+  void m_range_alloc(size_type n, allocator_type &alloc) {
+	m_start = m_finish = m_allocator.allocate(n);
+	m_end_of_storage = m_start + n;
+  }
 };
 
 /// generic template
@@ -91,6 +96,7 @@ class vector : protected _vector_base<T, Alloc> {
   using _base::m_start;
   using _base::m_finish;
   using _base::m_end_of_storage;
+  using _base::m_range_alloc;
 
  public:
 ///* MEMBER_TYPE *///
@@ -116,6 +122,55 @@ class vector : protected _vector_base<T, Alloc> {
   typedef typename _base::difference_type difference_type;
   typedef typename _base::size_type size_type;
 
+///* CUSTOM FUNCTION *///
+  ///* Uninitialized *///
+  template<class ForwardIterator, class Size>
+  void uninitialized_fill_n(ForwardIterator first, Size n, const T &x) {
+	for (; n--; ++first)
+	  new(static_cast<void *>(&*first))
+		  typename iterator_traits<ForwardIterator>::value_type(x);
+  }
+
+  template<class InputIterator, class ForwardIterator>
+  ForwardIterator uninitialized_copy(InputIterator first,
+									 InputIterator last,
+									 ForwardIterator result) {
+	typedef typename type_traits<InputIterator>::is_pod is_pod;
+	uninitialized_copy_aux(first, last, result, is_pod());
+  }
+
+  template<class InputIterator, class ForwardIterator>
+  ForwardIterator uninitialized_copy_aux(InputIterator first,
+										 InputIterator last,
+										 ForwardIterator result,
+										 true_type) {
+	for (; first != last; first++) {
+	  *result = *first;
+	  ++first;
+	  ++last;
+	}
+	return result;
+  }
+
+  template<class InputIterator, class ForwardIterator>
+  ForwardIterator uninitialized_copy_aux(InputIterator first,
+										 InputIterator last,
+										 ForwardIterator result,
+										 false_type) {
+	ForwardIterator curr = result;
+	try {
+	  for (; first != last; ++first, ++curr) {
+		m_allocator.construct(&*curr, *first);
+	  }
+	  return curr;
+	} catch (...) {
+	  for (ForwardIterator i = result; i != curr; ++i) {
+		m_allocator.destroy(&*i);
+		// throw;
+	  }
+	}
+  }
+
 ///* MEMBER FUNCTIONS *///
   ///* Constructor *///
 
@@ -129,16 +184,42 @@ class vector : protected _vector_base<T, Alloc> {
   explicit vector(const allocator_type &alloc = allocator_type()) : _base(alloc) {}
 
   /// Constructs a container with n elements. Each element is a copy of val.
-  explicit vector(size_type n, const value_type &val = value_type(),
+  explicit vector(size_type n,
+				  const value_type &val = value_type(),
 				  const allocator_type &alloc = allocator_type()) : _base(n, alloc) {
 	uninitialized_fill_n(n, val);
   }
 
   /// Constructs a container with as many elements as the range [first,last),
   /// with each element constructed from its corresponding element in that range, in the same order.
+  template<class InputIterator, class = typename enable_if<is_integral<T>::value>::type>
+  vector(InputIterator first,
+		 InputIterator last,
+		 const allocator_type &alloc = allocator_type()): _base(alloc) {
+	typedef typename iterator_traits<InputIterator>::iterator_category iter_category;
+	m_range_initialize(first, last, iter_category(), alloc);
+  }
+
   template<class InputIterator>
-  vector(InputIterator first, InputIterator last,
-		 const allocator_type &alloc = allocator_type());
+  void m_range_initialize(InputIterator first,
+						  InputIterator last,
+						  input_iterator_tag,
+						  const allocator_type &alloc) {
+	for (; first != last; ++first) {
+	  push_back(*first);
+	}
+  }
+
+  template<class ForwardIterator>
+  void m_range_initialize(ForwardIterator first,
+						  ForwardIterator last,
+						  forward_iterator_tag,
+						  const allocator_type &alloc) {
+	typedef typename iterator_traits<ForwardIterator>::iterator_category iter_category;
+	size_type distance = ft::distance(first, last, iter_category());
+	m_range_alloc(distance, alloc);
+	m_finish = uninitialized_copy(first, last, m_start, alloc);
+  }
 
   /// Constructs a container with a copy of each of the elements in x, in the same order.
   vector(const vector &x);
@@ -147,7 +228,6 @@ class vector : protected _vector_base<T, Alloc> {
   /// This destroys all container elements, and deallocates all the storage capacity
   /// allocated by the vector using its allocator.
   ~vector();
-
 
   ///* Operator *///
   /// Copies all the elements from x into the container.

@@ -129,26 +129,25 @@ class _vector_iterator
   reference operator[](int idx) {
 	return m_pointer[idx];
   }
-
-  template<class InputIterator>
-  typename iterator_traits<InputIterator>::difference_type
-  distance(InputIterator first, InputIterator last, input_iterator_tag) {
-	typename iterator_traits<InputIterator>::difference_type n = 0;
-	while (first != last) {
-	  ++first;
-	  ++n;
-	}
-	return n;
-  }
-
-  template<class RandomIterator>
-  typename iterator_traits<RandomIterator>::difference_type
-  distance(RandomIterator first, RandomIterator last, random_access_iterator_tag) {
-	typename iterator_traits<RandomIterator>::difference_type n = 0;
-	return last - first;
-  }
-
 };
+
+template<class InputIterator>
+typename iterator_traits<InputIterator>::difference_type
+distance(InputIterator first, InputIterator last, input_iterator_tag) {
+  typename iterator_traits<InputIterator>::difference_type n = 0;
+  while (first != last) {
+	++first;
+	++n;
+  }
+  return n;
+}
+
+template<class RandomIterator>
+typename iterator_traits<RandomIterator>::difference_type
+distance(RandomIterator first, RandomIterator last, random_access_iterator_tag) {
+  typename iterator_traits<RandomIterator>::difference_type n = 0;
+  return last - first;
+}
 
 }
 #endif //FT_CONTAINER_ITERATOR_HPP
