@@ -225,7 +225,7 @@ class vector : protected _vector_base<T, Alloc> {
 	typedef typename iterator_traits<ForwardIterator>::iterator_category iter_category;
 	size_type distance = ft::distance(first, last, iter_category());
 	m_range_alloc(distance, alloc);
-	m_finish = uninitialized_copy(first, last, m_start, alloc);
+	m_finish = uninitialized_copy(first, last, m_start);
   }
 
   /// Constructs a container with a copy of each of the elements in x, in the same order.
