@@ -83,6 +83,15 @@ class _vector_base : protected _vector_alloc_base<T, Alloc> {
 	m_start = m_finish = m_allocator.allocate(n);
 	m_end_of_storage = m_start + n;
   }
+
+  template<class ForwardIterator>
+  void m_destruct(ForwardIterator first,
+				  ForwardIterator last) {
+	for (; first != last; ++first) {
+	  m_allocator.destroy(&*first);
+	  // throw;
+	}
+  }
 };
 
 /// generic template
@@ -97,6 +106,7 @@ class vector : protected _vector_base<T, Alloc> {
   using _base::m_finish;
   using _base::m_end_of_storage;
   using _base::m_range_alloc;
+  using _base::m_destruct;
 
  public:
 ///* MEMBER_TYPE *///
@@ -164,10 +174,7 @@ class vector : protected _vector_base<T, Alloc> {
 	  }
 	  return curr;
 	} catch (...) {
-	  for (ForwardIterator i = result; i != curr; ++i) {
-		m_allocator.destroy(&*i);
-		// throw;
-	  }
+	  m_destruct(result, curr);
 	}
   }
 
@@ -222,12 +229,16 @@ class vector : protected _vector_base<T, Alloc> {
   }
 
   /// Constructs a container with a copy of each of the elements in x, in the same order.
-  vector(const vector &x);
+  vector(const vector &x) : _base(x.size(), x.get_allocator()) {
+	m_finish = uninitialized_copy(x.begin(), x.end(), m_start);
+  }
 
   ///* Destructor *///
   /// This destroys all container elements, and deallocates all the storage capacity
   /// allocated by the vector using its allocator.
-  ~vector();
+  ~vector() {
+	m_destruct(m_start, m_finish);
+  }
 
   ///* Operator *///
   /// Copies all the elements from x into the container.
