@@ -199,7 +199,7 @@ class vector : protected _vector_base<T, Alloc> {
 
   /// Constructs a container with as many elements as the range [first,last),
   /// with each element constructed from its corresponding element in that range, in the same order.
-  template<class InputIterator, class = typename enable_if<is_integral<T>::value>::type>
+  template<class InputIterator, class = typename enable_if<is_integral<InputIterator>::value>::type>
   vector(InputIterator first,
 		 InputIterator last,
 		 const allocator_type &alloc = allocator_type()): _base(alloc) {
