@@ -291,23 +291,48 @@ class vector : protected _vector_base<T, Alloc> {
 
   ///* Capacity *///
   /// TODO Capacity Member Function implement
-  ///  - size() ❎
-  ///  - max_size() ❎
-  ///  - resize() ❎
-  ///  - capacity() ❎
-  ///  - empty() ❎
-  ///  - reverse() ❎
-  size_type size() const;
+  ///  - size() ✅
+  ///  - max_size() ✅
+  ///  - resize() ✅
+  ///  - capacity() ✅
+  ///  - empty() ✅
+  ///  - reserve() ✅
+  size_type size() const {
+	return size_type(end() - begin());
+  }
 
-  size_type max_size() const;
+  size_type max_size() const {
+	return size_type(-1) / sizeof(T);
+  }
 
-  void resize(size_type n, value_type val = value_type());
+  void resize(size_type n, value_type val = value_type()) {
+	size_type size = size();
+	size_type cap = capacity();
+	if (n > size) {
+	  n > cap ? (n > cap * 2 ? reserve(n) : reserve(cap * 2)) : uninitialized_copy(m_start + n, m_finish);
+	} else {
+	  m_destruct(m_start + n, m_finish);
+	}
+  }
 
-  size_type capacity() const;
+  size_type capacity() const {
+	size_type(const_iterator(m_end_of_storage) - begin());
+  }
 
-  bool empty() const;
+  bool empty() const {
+	return size() == 0;
+  }
 
-  void reserve(size_type n);
+  void reserve(size_type n) {
+	size_type cap = capacity();
+	if (n > cap) {
+	  T *new_data = m_allocator.allocate(n);
+	  m_finish = uninitialized_copy(m_start, m_start + n, new_data);
+	  m_allocator.deallocate(m_start, cap);
+	  m_start = new_data;
+	  m_end_of_storage = m_start + n;
+	}
+  }
 
   ///* Element Access *///
 
