@@ -118,10 +118,10 @@ class vector : protected _vector_base<T, Alloc> {
   typedef typename _base::const_pointer const_pointer;
 
   /// TODO iterators implement
-  ///  - iterator ❎
-  ///  - const_iterator ❎
-  /// - reverse_iterator ❎
-  /// - const_reverse_iterator ❎
+  ///  - iterator ✅
+  ///  - const_iterator ✅
+  ///  - reverse_iterator ✅
+  ///  - const_reverse_iterator ✅
   typedef _vector_iterator<pointer> iterator;
   typedef _vector_iterator<const_pointer> const_iterator;
   // typedef iterator<iterator_traits<pointer>, T> iterator;
@@ -184,9 +184,9 @@ class vector : protected _vector_base<T, Alloc> {
   /// TODO Vector Constructor / Destructor implement
   ///  - default constructor ✅
   ///  - fill constructor ✅
-  ///  - range constructor ❎
-  ///  - copy constructor ❎
-  ///  - destructor ❎
+  ///  - range constructor ✅
+  ///  - copy constructor ✅
+  ///  - destructor ✅
   /// Constructs an empty container, with no elements.
   explicit vector(const allocator_type &alloc = allocator_type()) : _base(alloc) {}
 
