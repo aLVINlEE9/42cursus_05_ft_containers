@@ -116,6 +116,12 @@ class vector : protected _vector_base<T, Alloc> {
   typedef typename _base::const_reference const_reference;
   typedef typename _base::pointer pointer;
   typedef typename _base::const_pointer const_pointer;
+  typedef _vector_iterator<pointer> iterator;
+  typedef _vector_iterator<const_pointer> const_iterator;
+  typedef _reverse_iterator<iterator> reverse_iterator;
+  typedef _reverse_iterator<const_iterator> const_reverse_iterator;
+  typedef typename _base::difference_type difference_type;
+  typedef typename _base::size_type size_type;
 
  private:
   ///* CUSTOM FUNCTION *///
@@ -185,24 +191,14 @@ class vector : protected _vector_base<T, Alloc> {
 	m_finish = uninitialized_copy(first, last, m_start);
   }
 
+  bool m_range_check(size_type n) {
+	if (n >= size()) {
+	  return false;
+	}
+	return true;
+  }
+
  public:
-
-  /// TODO iterators implement
-  ///  - iterator ✅
-  ///  - const_iterator ✅
-  ///  - reverse_iterator ✅
-  ///  - const_reverse_iterator ✅
-  typedef _vector_iterator<pointer> iterator;
-  typedef _vector_iterator<const_pointer> const_iterator;
-  // typedef iterator<iterator_traits<pointer>, T> iterator;
-  // typedef iterator<iterator_traits<const_pointer>, T> const_iterator;
-  typedef _reverse_iterator<iterator> reverse_iterator;
-  typedef _reverse_iterator<const_iterator> const_reverse_iterator;
-
-  typedef typename _base::difference_type difference_type;
-  typedef typename _base::size_type size_type;
-
-
 ///* MEMBER FUNCTIONS *///
   ///* Constructor *///
 
@@ -350,21 +346,43 @@ class vector : protected _vector_base<T, Alloc> {
   ///  - reference back() ❎
   ///  - const_reference back() const ❎
 
-  reference operator[](size_type n);
+  reference operator[](size_type n) {
+	return (reference) *(begin() + n);
+  }
 
-  const_reference operator[](size_type n) const;
+  const_reference operator[](size_type n) const {
+	return (const_reference) *(begin() + n);
+  }
 
-  reference at(size_type n);
+  reference at(size_type n) {
+	if (m_range_check(n)) {
+	  return (*this)[n];
+	}
+	// throw
+  }
 
-  const_reference at(size_type n) const;
+  const_reference at(size_type n) const {
+	if (m_range_check(n)) {
+	  return (*this)[n];
+	}
+	// throw
+  }
 
-  reference front();
+  reference front() {
+	return *begin();
+  }
 
-  const_reference front() const;
+  const_reference front() const {
+	return *begin();
+  }
 
-  reference back();
+  reference back() {
+	return *(end() - 1);
+  }
 
-  const_reference back() const;
+  const_reference back() const {
+	return *(end() - 1);
+  }
 
 
   ///* Modifiers *///
