@@ -109,7 +109,7 @@ class vector : protected _vector_base<T, Alloc> {
   using _base::m_destruct;
 
  public:
-///* MEMBER_TYPE *///
+  ///* MEMBER_TYPE *///
   typedef typename _base::value_type value_type;
   typedef typename _base::allocator_type allocator_type;
   typedef typename _base::reference reference;
@@ -117,22 +117,8 @@ class vector : protected _vector_base<T, Alloc> {
   typedef typename _base::pointer pointer;
   typedef typename _base::const_pointer const_pointer;
 
-  /// TODO iterators implement
-  ///  - iterator ✅
-  ///  - const_iterator ✅
-  ///  - reverse_iterator ✅
-  ///  - const_reverse_iterator ✅
-  typedef _vector_iterator<pointer> iterator;
-  typedef _vector_iterator<const_pointer> const_iterator;
-  // typedef iterator<iterator_traits<pointer>, T> iterator;
-  // typedef iterator<iterator_traits<const_pointer>, T> const_iterator;
-  typedef _reverse_iterator<iterator> reverse_iterator;
-  typedef _reverse_iterator<const_iterator> const_reverse_iterator;
-
-  typedef typename _base::difference_type difference_type;
-  typedef typename _base::size_type size_type;
-
-///* CUSTOM FUNCTION *///
+ private:
+  ///* CUSTOM FUNCTION *///
   ///* Uninitialized *///
   template<class ForwardIterator, class Size>
   void uninitialized_fill_n(ForwardIterator first, Size n, const T &x) {
@@ -178,6 +164,45 @@ class vector : protected _vector_base<T, Alloc> {
 	}
   }
 
+  template<class InputIterator>
+  void m_range_initialize(InputIterator first,
+						  InputIterator last,
+						  input_iterator_tag,
+						  const allocator_type &alloc) {
+	for (; first != last; ++first) {
+	  push_back(*first);
+	}
+  }
+
+  template<class ForwardIterator>
+  void m_range_initialize(ForwardIterator first,
+						  ForwardIterator last,
+						  forward_iterator_tag,
+						  const allocator_type &alloc) {
+	typedef typename iterator_traits<ForwardIterator>::iterator_category iter_category;
+	size_type distance = ft::distance(first, last, iter_category());
+	m_range_alloc(distance, alloc);
+	m_finish = uninitialized_copy(first, last, m_start);
+  }
+
+ public:
+
+  /// TODO iterators implement
+  ///  - iterator ✅
+  ///  - const_iterator ✅
+  ///  - reverse_iterator ✅
+  ///  - const_reverse_iterator ✅
+  typedef _vector_iterator<pointer> iterator;
+  typedef _vector_iterator<const_pointer> const_iterator;
+  // typedef iterator<iterator_traits<pointer>, T> iterator;
+  // typedef iterator<iterator_traits<const_pointer>, T> const_iterator;
+  typedef _reverse_iterator<iterator> reverse_iterator;
+  typedef _reverse_iterator<const_iterator> const_reverse_iterator;
+
+  typedef typename _base::difference_type difference_type;
+  typedef typename _base::size_type size_type;
+
+
 ///* MEMBER FUNCTIONS *///
   ///* Constructor *///
 
@@ -205,27 +230,6 @@ class vector : protected _vector_base<T, Alloc> {
 		 const allocator_type &alloc = allocator_type()): _base(alloc) {
 	typedef typename iterator_traits<InputIterator>::iterator_category iter_category;
 	m_range_initialize(first, last, iter_category(), alloc);
-  }
-
-  template<class InputIterator>
-  void m_range_initialize(InputIterator first,
-						  InputIterator last,
-						  input_iterator_tag,
-						  const allocator_type &alloc) {
-	for (; first != last; ++first) {
-	  push_back(*first);
-	}
-  }
-
-  template<class ForwardIterator>
-  void m_range_initialize(ForwardIterator first,
-						  ForwardIterator last,
-						  forward_iterator_tag,
-						  const allocator_type &alloc) {
-	typedef typename iterator_traits<ForwardIterator>::iterator_category iter_category;
-	size_type distance = ft::distance(first, last, iter_category());
-	m_range_alloc(distance, alloc);
-	m_finish = uninitialized_copy(first, last, m_start);
   }
 
   /// Constructs a container with a copy of each of the elements in x, in the same order.
